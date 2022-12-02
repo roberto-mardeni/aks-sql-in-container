@@ -40,7 +40,7 @@ spec:
           env:
             - name: APPINSIGHTS_INSTRUMENTATIONKEY
               value: {{ .Values.applicationInsights.InstrumentationKey }}
-            - name: ConnectionStrings__mydb
+            - name: ConnectionStrings__MyDb
               value: {{ .Values.connectionStrings.mydb }}
             {{- $root := . }}
             {{- range $ref, $values := .Values.secrets }}
