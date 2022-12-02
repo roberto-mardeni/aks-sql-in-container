@@ -61,7 +61,12 @@ namespace aspnet_core_dotnet_core.Pages
 
             try
             {
-                using (SqlConnection con = new SqlConnection(Configuration["ConnectionStrings:MyDb"]))
+                var connectionString = (String)Configuration["ConnectionStrings:MyDb"];
+
+                if (string.IsNullOrEmpty(connectionString))
+                    throw new ApplicationException("Connection string is empty");
+
+                using (SqlConnection con = new SqlConnection(connectionString))
                 {
                     await con.OpenAsync();
 
