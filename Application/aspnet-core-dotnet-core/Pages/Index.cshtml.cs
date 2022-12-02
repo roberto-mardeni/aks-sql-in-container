@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using TimeZoneConverter;
 using System.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
+using System.Diagnostics;
 
 namespace aspnet_core_dotnet_core.Pages
 {
@@ -65,6 +66,8 @@ namespace aspnet_core_dotnet_core.Pages
 
                 if (string.IsNullOrEmpty(connectionString))
                     throw new ApplicationException("Connection string is empty");
+                else
+                    Trace.WriteLine("Connection string: " + connectionString.Substring(0, 20) + "...");
 
                 using (SqlConnection con = new SqlConnection(connectionString))
                 {
