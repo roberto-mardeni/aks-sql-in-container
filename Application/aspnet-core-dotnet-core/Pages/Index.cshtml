@@ -15,26 +15,23 @@
                 <img src="~/images/tweetThis.svg" />
             </a>
         </div>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col">UTC DateTime</th>
-                    <th scope="col">EST DateTime</th>
-                    <th scope="col">CET DateTime</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>@ViewData["UTCDateTime"]</td>
-                    <td>@ViewData["ESTDateTime"]</td>
-                    <td>@ViewData["CETDateTime"]</td>
-                </tr>                
-            </tbody>
-        </table>
         <div class="content-body">
-            <div class="success-text">Success!</div>
-            <div class="description line-1"> GitHub workflow has been successfully setup</div>
-            <div class="description line-2"> Your ASP.NET Core app is up and running on Azure</div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">UTC DateTime</th>
+                        <th scope="col">EST DateTime</th>
+                        <th scope="col">CET DateTime</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>@ViewData["UTCDateTime"]</td>
+                        <td>@ViewData["ESTDateTime"]</td>
+                        <td>@ViewData["CETDateTime"]</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
