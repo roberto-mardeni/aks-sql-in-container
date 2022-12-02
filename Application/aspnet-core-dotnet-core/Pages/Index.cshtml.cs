@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using TimeZoneConverter;
+using System.Data.SqlClient;
+using Microsoft.Extensions.Configuration;
+
 namespace aspnet_core_dotnet_core.Pages
 {
     public class IndexModel : PageModel
@@ -12,7 +15,15 @@ namespace aspnet_core_dotnet_core.Pages
         string easternZoneId = "Eastern Standard Time";
         string cetZoneId = "Central European Standard Time";
 
-        public void OnGet()
+        // requires using Microsoft.Extensions.Configuration;
+        private readonly IConfiguration Configuration;
+
+        public IndexModel(IConfiguration configuration)
+        {
+            Configuration = configuration;
+        }
+
+        public async void OnGet()
         {
             var currentTime = DateTime.UtcNow;
 
@@ -46,6 +57,31 @@ namespace aspnet_core_dotnet_core.Pages
             catch (InvalidTimeZoneException)
             {
                 ViewData["CETDateTime"] = "Registry data on the Central European Standard Time zone has been corrupted.";
+            }
+
+            try
+            {
+                using (SqlConnection con = new SqlConnection(Configuration["ConnectionStrings:MyDb"]))
+                {
+                    await con.OpenAsync();
+
+                    SqlCommand cmd = new SqlCommand("SELECT GETDATE() AT TIME ZONE 'UTC' AS UTCDateTime, GETDATE() AT TIME ZONE 'Eastern Standard Time' AS ESTDateTime, GETDATE() AT TIME ZONE 'Central European Standard Time' AS CETDateTime", con);
+                    cmd.CommandType = System.Data.CommandType.Text;
+
+                    using (var reader = await cmd.ExecuteReaderAsync())
+                    {
+                        if (reader.Read())
+                        {
+                            ViewData["UTCDateTimeFromDB"] = reader.GetString(0);
+                            ViewData["ESTDateTimeFromDB"] = reader.GetString(1);
+                            ViewData["CETDateTimeFromDB"] = reader.GetString(2);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ViewData["UTCDateTimeFromDB"] = ex.Message;
             }
         }
         public string DoTest()

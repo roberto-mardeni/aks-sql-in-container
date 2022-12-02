@@ -7,6 +7,7 @@
 <table class="table">
     <thead>
         <tr>
+            <th scope="col">Source</th>
             <th scope="col">UTC DateTime</th>
             <th scope="col">EST DateTime</th>
             <th scope="col">CET DateTime</th>
@@ -14,9 +15,16 @@
     </thead>
     <tbody>
         <tr>
+            <td>Application</td>
             <td>@ViewData["UTCDateTime"]</td>
             <td>@ViewData["ESTDateTime"]</td>
             <td>@ViewData["CETDateTime"]</td>
+        </tr>
+        <tr>
+            <td>Database</td>
+            <td>@ViewData["UTCDateTimeFromDB"]</td>
+            <td>@ViewData["ESTDateTimeFromDB"]</td>
+            <td>@ViewData["CETDateTimeFromDB"]</td>
         </tr>
     </tbody>
 </table>

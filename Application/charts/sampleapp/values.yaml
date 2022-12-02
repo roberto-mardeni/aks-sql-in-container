@@ -55,3 +55,6 @@ affinity: {}
 
 applicationInsights:
   InstrumentationKey: VALUE_TO_BE_OVERRIDDEN
+
+connectionStrings:
+  mydb: "Server=mssql-latest-deploy,1433;Initial Catalog=mydb;Persist Security Info=False;User ID=sa;Password=Toughpass1!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"
