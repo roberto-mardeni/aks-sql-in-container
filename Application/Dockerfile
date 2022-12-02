@@ -13,6 +13,8 @@ RUN dotnet publish -c Release -o out
 FROM mcr.microsoft.com/dotnet/core/aspnet:3.1-buster-slim
 # set noninteractive installation
 RUN export DEBIAN_FRONTEND=noninteractive
+# set desired timezone
+ENV TZ=Europe/London
 # install tzdata package
 RUN apt-get install -y tzdata
 WORKDIR /app
