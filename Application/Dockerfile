@@ -11,6 +11,8 @@ RUN dotnet publish -c Release -o out
 
 # Build runtime image
 FROM mcr.microsoft.com/dotnet/core/aspnet:3.1-buster-slim
+# Required for Time Zone database lookups
+RUN apk add --no-cache tzdata
 WORKDIR /app
 COPY --from=build-env /app/out .
 ENTRYPOINT ["dotnet", "aspnet-core-dotnet-core.dll"]
