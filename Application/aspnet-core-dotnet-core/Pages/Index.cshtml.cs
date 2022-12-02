@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-
+using TimeZoneConverter;
 namespace aspnet_core_dotnet_core.Pages
 {
     public class IndexModel : PageModel
@@ -22,7 +22,7 @@ namespace aspnet_core_dotnet_core.Pages
 
             try
             {
-                TimeZoneInfo easternZone = TimeZoneInfo.FindSystemTimeZoneById(easternZoneId);
+                TimeZoneInfo easternZone = TZConvert.GetTimeZoneInfo(easternZoneId);
                 ViewData["ESTDateTime"] = TimeZoneInfo.ConvertTime(currentTime, easternZone).ToString();
             }
             catch (TimeZoneNotFoundException)
@@ -36,7 +36,7 @@ namespace aspnet_core_dotnet_core.Pages
 
             try
             {
-                TimeZoneInfo cetZone = TimeZoneInfo.FindSystemTimeZoneById(cetZoneId);
+                TimeZoneInfo cetZone = TZConvert.GetTimeZoneInfo(cetZoneId);
                 ViewData["CETDateTime"] = TimeZoneInfo.ConvertTime(currentTime, cetZone).ToString();
             }
             catch (TimeZoneNotFoundException)
