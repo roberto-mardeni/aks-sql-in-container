@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.ApplicationInsights.DependencyCollector;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -34,6 +35,8 @@ namespace aspnet_core_dotnet_core
             // Enable Application Insights for telemetries. Update the instrumentation key in 'appsettings.json' to transfer the events.
             services.AddApplicationInsightsTelemetry();
             services.AddApplicationInsightsKubernetesEnricher();
+
+            services.ConfigureTelemetryModule<DependencyTrackingTelemetryModule>((module, o) => { module.EnableSqlCommandTextInstrumentation = true; });
 
             services.AddRazorPages();
         }

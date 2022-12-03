@@ -83,6 +83,8 @@ namespace aspnet_core_dotnet_core.Pages
                             ViewData["UTCDateTimeFromDB"] = reader.GetDateTimeOffset(0);
                             ViewData["ESTDateTimeFromDB"] = reader.GetDateTimeOffset(1);
                             ViewData["CETDateTimeFromDB"] = reader.GetDateTimeOffset(2);
+                        } else {
+                            ViewData["UTCDateTimeFromDB"] = "No data available in reader";
                         }
                     }
                 }
