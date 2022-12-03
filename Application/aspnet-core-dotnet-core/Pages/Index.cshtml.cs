@@ -66,8 +66,8 @@ namespace aspnet_core_dotnet_core.Pages
 
                 if (string.IsNullOrEmpty(connectionString))
                     throw new ApplicationException("Connection string is empty");
-                else
-                    Trace.WriteLine("Connection string: " + connectionString.Substring(0, 20) + "...");
+
+                Trace.WriteLine("Connection string: " + connectionString.Substring(0, 20) + "...");
 
                 using (SqlConnection con = new SqlConnection(connectionString))
                 {
@@ -80,9 +80,9 @@ namespace aspnet_core_dotnet_core.Pages
                     {
                         if (reader.Read())
                         {
-                            ViewData["UTCDateTimeFromDB"] = reader.GetString(0);
-                            ViewData["ESTDateTimeFromDB"] = reader.GetString(1);
-                            ViewData["CETDateTimeFromDB"] = reader.GetString(2);
+                            ViewData["UTCDateTimeFromDB"] = reader.GetDateTimeOffset(0);
+                            ViewData["ESTDateTimeFromDB"] = reader.GetDateTimeOffset(1);
+                            ViewData["CETDateTimeFromDB"] = reader.GetDateTimeOffset(2);
                         }
                     }
                 }
