@@ -92,6 +92,7 @@ namespace aspnet_core_dotnet_core.Pages
             catch (Exception ex)
             {
                 ViewData["UTCDateTimeFromDB"] = ex.Message;
+                throw ex;
             }
         }
         public string DoTest()
