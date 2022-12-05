@@ -111,6 +111,14 @@ jobs:
         echo "::set-output name=AIKey::`az resource show -g ${{ env.RESOURCEGROUPNAME }} -n ${{ env.CLUSTERNAME }} --resource-type "Microsoft.Insights/components" --query "properties.InstrumentationKey" -o tsv`"
         echo "::add-mask::`az resource show -g ${{ env.RESOURCEGROUPNAME }} -n ${{ env.CLUSTERNAME }} --resource-type "Microsoft.Insights/components" --query "properties.InstrumentationKey" -o tsv`"
 
+    - name: Install MS SQL via helm chart
+      id: installMssqlHelmChart
+      run: |
+        git clone https://github.com/microsoft/mssql-docker.git
+        pushd mssql-docker/linux/sample-helm-chart
+        helm upgrade --install mssql-latest-deploy . --set ACCEPT_EULA.value=Y --set MSSQL_PID.value=Developer -n ${{ env.NAMESPACE }} --wait
+        popd
+
     - uses: azure/k8s-bake@v1
       id: bakeManifests
       with:
