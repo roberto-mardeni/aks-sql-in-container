@@ -24,7 +24,7 @@ namespace aspnet_core_dotnet_core.Pages
             Configuration = configuration;
         }
 
-        public async void OnGet()
+        public async Task OnGet()
         {
             var currentTime = DateTime.UtcNow;
 
