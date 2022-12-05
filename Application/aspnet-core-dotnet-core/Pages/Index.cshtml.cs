@@ -60,6 +60,10 @@ namespace aspnet_core_dotnet_core.Pages
                 ViewData["CETDateTime"] = "Registry data on the Central European Standard Time zone has been corrupted.";
             }
 
+            ViewData["UTCDateTimeFromDB"] = "Uknown";
+            ViewData["ESTDateTimeFromDB"] = "Uknown";
+            ViewData["CETDateTimeFromDB"] = "Uknown";
+
             try
             {
                 var connectionString = (String)Configuration["ConnectionStrings:MyDb"];
@@ -83,7 +87,9 @@ namespace aspnet_core_dotnet_core.Pages
                             ViewData["UTCDateTimeFromDB"] = reader.GetDateTimeOffset(0);
                             ViewData["ESTDateTimeFromDB"] = reader.GetDateTimeOffset(1);
                             ViewData["CETDateTimeFromDB"] = reader.GetDateTimeOffset(2);
-                        } else {
+                        }
+                        else
+                        {
                             ViewData["UTCDateTimeFromDB"] = "No data available in reader";
                         }
                     }
