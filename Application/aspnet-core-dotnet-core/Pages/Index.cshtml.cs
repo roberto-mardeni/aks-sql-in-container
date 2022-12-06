@@ -60,16 +60,23 @@ namespace aspnet_core_dotnet_core.Pages
                 ViewData["CETDateTime"] = "Registry data on the Central European Standard Time zone has been corrupted.";
             }
 
-            ViewData["UTCDateTimeFromDB"] = "Uknown";
-            ViewData["ESTDateTimeFromDB"] = "Uknown";
-            ViewData["CETDateTimeFromDB"] = "Uknown";
+            await RetrieveDateTimeFromDB("ConnectionStrings:MyDbUTC", "TZUTC", "UTCDateTimeFromDBUTC", "ESTDateTimeFromDBUTC", "CETDateTimeFromDBUTC");
+            await RetrieveDateTimeFromDB("ConnectionStrings:MyDbCET", "TZCET", "UTCDateTimeFromDBCET", "ESTDateTimeFromDBCET", "CETDateTimeFromDBCET");
+        }
+
+        private async Task RetrieveDateTimeFromDB(string connectionStringName, string field1, string field2, string field3, string field4)
+        {
+            ViewData[field1] = "Uknown";
+            ViewData[field2] = "Uknown";
+            ViewData[field3] = "Uknown";
+            ViewData[field4] = "Uknown";
 
             try
             {
-                var connectionString = (String)Configuration["ConnectionStrings:MyDb"];
+                var connectionString = (String)Configuration[connectionStringName];
 
                 if (string.IsNullOrEmpty(connectionString))
-                    throw new ApplicationException("Connection string is empty");
+                    throw new ApplicationException($"Connection string {connectionStringName} is empty");
 
                 Trace.WriteLine("Connection string: " + connectionString.Substring(0, 20) + "...");
 
@@ -77,30 +84,32 @@ namespace aspnet_core_dotnet_core.Pages
                 {
                     await con.OpenAsync();
 
-                    SqlCommand cmd = new SqlCommand("SELECT GETDATE() AT TIME ZONE 'UTC' AS UTCDateTime, GETDATE() AT TIME ZONE 'Eastern Standard Time' AS ESTDateTime, GETDATE() AT TIME ZONE 'Central European Standard Time' AS CETDateTime", con);
+                    SqlCommand cmd = new SqlCommand("SELECT CURRENT_TIMEZONE() AS TZ, GETDATE() AS CurrentDateTime, GETDATE() AT TIME ZONE 'Eastern Standard Time' AS ESTDateTime, GETDATE() AT TIME ZONE 'Central European Standard Time' AS CETDateTime", con);
                     cmd.CommandType = System.Data.CommandType.Text;
 
                     using (var reader = await cmd.ExecuteReaderAsync())
                     {
                         if (reader.Read())
                         {
-                            ViewData["UTCDateTimeFromDB"] = reader.GetDateTimeOffset(0);
-                            ViewData["ESTDateTimeFromDB"] = reader.GetDateTimeOffset(1);
-                            ViewData["CETDateTimeFromDB"] = reader.GetDateTimeOffset(2);
+                            ViewData[field1] = reader.GetString(0);
+                            ViewData[field2] = reader.GetDateTime(1);
+                            ViewData[field3] = reader.GetDateTimeOffset(2);
+                            ViewData[field4] = reader.GetDateTimeOffset(3);
                         }
                         else
                         {
-                            ViewData["UTCDateTimeFromDB"] = "No data available in reader";
+                            ViewData[field1] = "No data available in reader";
                         }
                     }
                 }
             }
             catch (Exception ex)
             {
-                ViewData["UTCDateTimeFromDB"] = ex.Message;
+                ViewData[field1] = ex.Message;
                 throw ex;
             }
         }
+
         public string DoTest()
         {
             return "Index";

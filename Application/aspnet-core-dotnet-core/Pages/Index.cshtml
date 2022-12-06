@@ -21,7 +21,8 @@
     <thead>
         <tr>
             <th scope="col">Source</th>
-            <th scope="col">UTC DateTime</th>
+            <th scope="col">Timezone</th>
+            <th scope="col">Date & Time</th>
             <th scope="col">EST DateTime</th>
             <th scope="col">CET DateTime</th>
         </tr>
@@ -29,15 +30,24 @@
     <tbody>
         <tr>
             <td>Application</td>
+            <td>N/A</td>
             <td>@ViewData["UTCDateTime"]</td>
             <td>@ViewData["ESTDateTime"]</td>
             <td>@ViewData["CETDateTime"]</td>
         </tr>
         <tr>
-            <td>Database</td>
-            <td>@ViewData["UTCDateTimeFromDB"]</td>
-            <td>@ViewData["ESTDateTimeFromDB"]</td>
-            <td>@ViewData["CETDateTimeFromDB"]</td>
+            <td>DB UTC</td>
+            <td>@ViewData["TZUTC"]</td>
+            <td>@ViewData["UTCDateTimeFromDBUTC"]</td>
+            <td>@ViewData["ESTDateTimeFromDBUTC"]</td>
+            <td>@ViewData["CETDateTimeFromDBUTC"]</td>
+        </tr>
+        <tr>
+            <td>DB CET</td>
+            <td>@ViewData["TZCET"]</td>
+            <td>@ViewData["UTCDateTimeFromDBCET"]</td>
+            <td>@ViewData["ESTDateTimeFromDBCET"]</td>
+            <td>@ViewData["CETDateTimeFromDBCET"]</td>
         </tr>
     </tbody>
 </table>
