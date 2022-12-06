@@ -3,6 +3,8 @@ on:
   push:
     branches:
       - master
+   paths-ignore:
+     - 'README.md'
 
 env:
   RESOURCEGROUPNAME: "aks-sql-in-container-rg"
