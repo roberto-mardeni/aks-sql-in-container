@@ -111,13 +111,13 @@ jobs:
         echo "::set-output name=AIKey::`az resource show -g ${{ env.RESOURCEGROUPNAME }} -n ${{ env.CLUSTERNAME }} --resource-type "Microsoft.Insights/components" --query "properties.InstrumentationKey" -o tsv`"
         echo "::add-mask::`az resource show -g ${{ env.RESOURCEGROUPNAME }} -n ${{ env.CLUSTERNAME }} --resource-type "Microsoft.Insights/components" --query "properties.InstrumentationKey" -o tsv`"
 
-    - name: Install MS SQL via helm chart
-      id: installMssqlHelmChart
-      run: |
-        pushd Application/charts/mssql
-        helm upgrade --install mssql-latest-deploy . --set ACCEPT_EULA.value=Y --set MSSQL_PID.value=Developer -n ${{ env.NAMESPACE }} --wait
-        helm upgrade --install mssql-cet . --set ACCEPT_EULA.value=Y --set MSSQL_PID.value=Developer --set TZ=Europe/Amsterdam -n ${{ env.NAMESPACE }} --set-string pvc.StorageClass=mssql-cet-disks,timezone.value="Europe/Amsterdam"
-        popd
+    # - name: Install MS SQL via helm chart
+    #   id: installMssqlHelmChart
+    #   run: |
+    #     pushd Application/charts/mssql
+    #     helm upgrade --install mssql-latest-deploy . --set ACCEPT_EULA.value=Y --set MSSQL_PID.value=Developer -n ${{ env.NAMESPACE }} --wait
+    #     helm upgrade --install mssql-cet . --set ACCEPT_EULA.value=Y --set MSSQL_PID.value=Developer --set TZ=Europe/Amsterdam -n ${{ env.NAMESPACE }} --set-string pvc.StorageClass=mssql-cet-disks,timezone.value="Europe/Amsterdam"
+    #     popd
 
     - uses: azure/k8s-bake@v1
       id: bakeManifests
