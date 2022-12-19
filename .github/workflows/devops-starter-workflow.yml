@@ -9,7 +9,7 @@ on:
 env:
   RESOURCEGROUPNAME: "aks-sql-in-container-rg"
   LOCATION: "East US"
-  SUBSCRIPTIONID: "15561d27-5df0-4f7b-9cb8-a4a771b9fd71"
+  SUBSCRIPTIONID: "c38893c4-15b8-4925-bad8-f5486addcc7d"
   IMAGENAME: "akssqlincontainerdfc9"
   REGISTRYSKU: "Standard"
   REGISTRYNAME: "akssqlincontaineracr"
